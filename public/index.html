@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVault - Password Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Notification Toast -->
+        <div id="toast" class="toast glass hidden">Action Successful</div>
+
+        <!-- LOADING SCREEN -->
+        <div id="loading-screen" class="screen active">
+            <div class="spinner"></div>
+            <p>Securing Vault...</p>
+        </div>
+
+        <!-- SETUP SCREEN -->
+        <div id="setup-screen" class="screen hidden">
+            <div class="auth-container glass-strong">
+                <h1>Create Your Vault</h1>
+                <p>Set a strong Master Password. This is the only way to access your data.</p>
+                <form id="setup-form">
+                    <div class="form-group">
+                        <label>Master Password</label>
+                        <input type="password" id="setup-password" required minlength="8"
+                            placeholder="At least 8 characters">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="setup-confirm" required placeholder="Repeat password">
+                    </div>
+                    <hr>
+                    <p class="subtitle">Recovery Security Question</p>
+                    <div class="form-group">
+                        <label>Question</label>
+                        <input type="text" id="setup-question" required placeholder="e.g. What is my first pet's name?">
+                    </div>
+                    <div class="form-group">
+                        <label>Answer</label>
+                        <input type="text" id="setup-answer" required placeholder="Your secret answer">
+                    </div>
+                    <button type="submit" class="btn-primary">Initialize Vault</button>
+                    <div class="error-msg" id="setup-error"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- LOCK SCREEN -->
+        <div id="lock-screen" class="screen hidden">
+            <div class="auth-container glass-strong">
+                <div class="lock-icon">🔒</div>
+                <h1>Vault Locked</h1>
+                <p>Enter Master Password to unlock</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <input type="password" id="login-password" required placeholder="Master Password" autofocus>
+                    </div>
+                    <button type="submit" class="btn-primary">Unlock</button>
+                    <div class="error-msg" id="login-error"></div>
+                </form>
+                <a href="#" id="forgot-password-link" class="link-small">Forgot Master Password?</a>
+            </div>
+        </div>
+
+        <!-- RECOVERY SCREEN -->
+        <div id="recovery-screen" class="screen hidden">
+            <div class="auth-container glass-strong">
+                <h1>Recover Access</h1>
+                <p>Answer your security question to reset the Master Password.</p>
+                <form id="recovery-form">
+                    <div class="form-group">
+                        <label id="recovery-question-display">Loading question...</label>
+                        <input type="text" id="recovery-answer" required placeholder="Your Answer">
+                    </div>
+                    <div class="form-group">
+                        <label>New Master Password</label>
+                        <input type="password" id="recovery-new-password" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn-primary">Reset Password</button>
+                    <div class="error-msg" id="recovery-error"></div>
+                </form>
+                <a href="#" id="back-to-login" class="link-small">Back to Login</a>
+            </div>
+        </div>
+
+        <!-- DASHBOARD SCREEN -->
+        <div id="dashboard-screen" class="screen hidden">
+            <header class="top-bar glass">
+                <div class="logo">SecureVault</div>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search accounts...">
+                </div>
+                <button id="logout-btn" class="btn-secondary">Lock Vault</button>
+            </header>
+
+            <main class="vault-container">
+                <div class="vault-header">
+                    <h2>My Credentials</h2>
+                    <button id="add-btn" class="btn-primary">+ New Item</button>
+                </div>
+                <div id="credentials-list" class="grid-layout">
+                    <!-- Credentials will be injected here -->
+                </div>
+            </main>
+        </div>
+
+        <!-- ADD/EDIT MODAL -->
+        <div id="item-modal" class="modal hidden">
+            <div class="modal-content glass-strong">
+                <h2 id="modal-title">Add Item</h2>
+                <form id="credential-form">
+                    <input type="hidden" id="credential-id">
+                    <div class="form-group">
+                        <label>App / Website Name</label>
+                        <input type="text" id="cred-app" required placeholder="e.g. Google">
+                    </div>
+                    <div class="form-group">
+                        <label>Username / Email</label>
+                        <input type="text" id="cred-username" required placeholder="user@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="cred-password" required>
+                            <span id="toggle-modal-password" class="eye-icon">👁️</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes (Optional)</label>
+                        <textarea id="cred-notes" placeholder="Additional details..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="modal-cancel" class="btn-secondary">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
