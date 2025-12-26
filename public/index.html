@@ -53,18 +53,27 @@
 
         <!-- LOCK SCREEN -->
         <div id="lock-screen" class="screen hidden">
-            <div class="auth-container glass-strong">
-                <div class="lock-icon">🔒</div>
-                <h1>Vault Locked</h1>
-                <p>Enter Master Password to unlock</p>
-                <form id="login-form">
-                    <div class="form-group">
-                        <input type="password" id="login-password" required placeholder="Master Password" autofocus>
+            <div class="auth-layout-wrapper">
+                <div class="vault-branding-area">
+                    <div class="shield-badge">🛡️</div>
+                    <div class="branding-content">
+                        <h1>SECURE VAULT</h1>
+                        <p>Protected by Master Password</p>
                     </div>
-                    <button type="submit" class="btn-primary">Unlock</button>
-                    <div class="error-msg" id="login-error"></div>
-                </form>
-                <a href="#" id="forgot-password-link" class="link-small">Forgot Master Password?</a>
+                </div>
+                <div class="auth-container glass-strong">
+                    <div class="lock-icon">🔐</div>
+                    <h1>Vault Locked</h1>
+                    <p>Enter Master Password to unlock</p>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <input type="password" id="login-password" required placeholder="Master Password" autofocus>
+                        </div>
+                        <button type="submit" class="btn-primary">Unlock Vault</button>
+                        <div class="error-msg" id="login-error"></div>
+                    </form>
+                    <a href="#" id="forgot-password-link" class="link-small">Forgot Master Password?</a>
+                </div>
             </div>
         </div>
 
@@ -104,7 +113,7 @@
                     <h2>My Credentials</h2>
                     <button id="add-btn" class="btn-primary">+ New Item</button>
                 </div>
-                <div id="credentials-list" class="grid-layout">
+                <div id="credentials-list">
                     <!-- Credentials will be injected here -->
                 </div>
             </main>

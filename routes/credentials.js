@@ -23,7 +23,7 @@ router.use(verifyToken);
 // Get all credentials (passwords masked)
 router.get('/', async (req, res) => {
     try {
-        const credentials = await Credential.find().sort({ createdAt: -1 });
+        const credentials = await Credential.find().sort({ appName: 1, username: 1 });
         const safeCredentials = credentials.map(c => ({
             _id: c._id,
             appName: c.appName,

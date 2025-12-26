@@ -159,22 +159,55 @@ function renderCredentials(filter = '') {
         c.username.toLowerCase().includes(filter.toLowerCase())
     );
 
+    // Group by appName (case-insensitive)
+    const groups = {};
     filtered.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'cred-card glass';
-        card.innerHTML = `
-            <div class="cred-header">
-                <div class="cred-app">${c.appName}</div>
-                <div class="cred-icons" onclick="deleteItem('${c._id}')">🗑️</div>
-            </div>
-            <div class="cred-user">${c.username}</div>
-            <div class="cred-actions">
-                <button class="action-btn" onclick="copyUser('${c.username}')">Copy User</button>
-                <button class="action-btn" onclick="revealPass('${c._id}', this)">Show Pass</button>
-                <button class="action-btn" onclick="editItem('${c._id}')">Edit</button>
-            </div>
+        const normalizedApp = c.appName.trim().toLowerCase();
+        if (!groups[normalizedApp]) {
+            groups[normalizedApp] = {
+                displayName: c.appName.charAt(0).toUpperCase() + c.appName.slice(1).toLowerCase(), // Capitalize first letter
+                items: []
+            };
+        }
+        groups[normalizedApp].items.push(c);
+    });
+
+    // Render groups
+    Object.keys(groups).sort().forEach(groupKey => {
+        const group = groups[groupKey];
+        const groupItems = group.items;
+
+        // Group Header
+        const header = document.createElement('div');
+        header.className = 'group-header';
+        header.innerHTML = `
+            <div class="group-title">${group.displayName}</div>
+            <div class="group-count">${groupItems.length} accounts</div>
         `;
-        list.appendChild(card);
+        list.appendChild(header);
+
+        // Group Container for grid-like feel within group
+        const groupContainer = document.createElement('div');
+        groupContainer.className = 'grid-layout';
+
+        groupItems.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'cred-card glass';
+            card.innerHTML = `
+                <div class="cred-header">
+                    <div class="cred-app">${c.appName}</div>
+                    <div class="cred-icons" onclick="deleteItem('${c._id}')">🗑️</div>
+                </div>
+                <div class="cred-user">${c.username}</div>
+                <div class="cred-actions">
+                    <button class="action-btn" onclick="copyUser('${c.username}')">Copy User</button>
+                    <button class="action-btn" onclick="revealPass('${c._id}', this)">Show Pass</button>
+                    <button class="action-btn" onclick="editItem('${c._id}')">Edit</button>
+                </div>
+            `;
+            groupContainer.appendChild(card);
+        });
+        list.appendChild(groupContainer);
     });
 }
 
