@@ -314,6 +314,18 @@ textarea:focus {
    DASHBOARD
    ============================================ */
 
+#dashboard-screen.screen {
+    position: relative;
+    display: block;
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Ensure centering still works for other screens */
+.screen:not(#dashboard-screen) {
+    display: flex;
+}
+
 .top-bar {
     position: fixed;
     top: 1.5rem;
@@ -327,6 +339,13 @@ textarea:focus {
     align-items: center;
     gap: 3rem;
     z-index: 100;
+    transition: transform 0.4s var(--transition-smooth), opacity 0.4s var(--transition-smooth);
+}
+
+.top-bar.hidden-on-scroll {
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .logo {
@@ -338,13 +357,6 @@ textarea:focus {
 .search-bar {
     flex: 1;
     margin-right: 2rem;
-    transition: opacity 0.3s var(--transition-smooth), transform 0.3s var(--transition-smooth);
-}
-
-.search-bar.hidden-on-scroll {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-10px);
 }
 
 .vault-container {

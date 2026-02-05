@@ -339,19 +339,19 @@ document.getElementById('credential-form').addEventListener('submit', async (e) 
 });
 
 
-// Hide Search Bar on Scroll
+// Hide Top Bar on Scroll
 let lastScrollTop = 0;
-const searchBarArea = document.querySelector('.search-bar');
+const topBar = document.querySelector('.top-bar');
 
 window.addEventListener('scroll', () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
+
     if (scrollTop > 50) {
         // Scrolling down or away from top
-        searchBarArea.classList.add('hidden-on-scroll');
+        topBar.classList.add('hidden-on-scroll');
     } else {
         // Near top
-        searchBarArea.classList.remove('hidden-on-scroll');
+        topBar.classList.remove('hidden-on-scroll');
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 }, { passive: true });
